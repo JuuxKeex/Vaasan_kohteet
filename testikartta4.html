@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartta kohteista</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map { height: 100vh; margin: 0; }
+        body { margin: 0; padding: 0; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        // Kartan alustaminen
+        var map = L.map('map').setView([63.1, 21.6], 13);
+
+        // Taustakartta
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // Kohteet ja koordinaatit
+        var locations = [
+            ["Vaasan satama / teollisuusalue", 63.088214, 21.558242],
+            ["Hietasaaren uimaranta / pienvenesatama", 63.093629, 21.595430],
+            ["Kalaranta", 63.092367, 21.604301],
+            ["Sisäsatama", 63.095668, 21.601067],
+            ["Keskussairaalan liikennejärjestelyt", 63.085111, 21.619929],
+            ["Ravilaakso - uusi asuinale, jossa vasta infra", 63.085393, 21.629683],
+            ["Hietasaarenkadun kävelyn ja pyöräilyn laatukäytävä", 63.096945, 21.608210],
+            ["Kävelykadun jatko", 63.097221, 21.620219],
+            ["Matkakeskuksen pyörätalli", 63.097294, 21.621651],
+            ["Onkilahden puisto", 63.104667, 21.611421],
+            ["Vetokannaksen ylikulkusilta", 63.114087, 21.618180],
+            ["Kivihaan kaupallinen alue", 63.111509, 21.653737],
+            ["Koskisuo/Länsiniitty uudet asuinalueet", 63.128372, 21.651909],
+            ["Laajametsän akkuteollisuusalue", 63.048793, 21.803865],
+            ["Suvilahden asuntomessualue", 63.075228, 21.641156]
+        ];
+
+        // Lisätään kohteet kartalle
+        locations.forEach(function(location) {
+            var gmapsLink = `<a href="https://www.google.com/maps/dir/?api=1&destination=${location[1]},${location[2]}" target="_blank">Reititä tänne</a>`;
+            var popupContent = `<b>${location[0]}</b><br>${gmapsLink}`;
+            
+            L.marker([location[1], location[2]]).addTo(map).bindPopup(popupContent);
+        });
+    </script>
+</body>
+</html>
